@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+from trello2toggl import Trello, Toggl, Sync
+
+# Initialize Trello API wrapper
+trello = Trello(api_key='YOUR API KEY',
+    token='YOUR USER ACCESS TOKEN')
+
+# Initialize Toggl API wrapper
+toggl = Toggl(api_token='YOUR API TOKEN')
+
+# Initialize sync (by default, all boards/projects with the same name are
+# synced. You can specify the projects to sync explicitly if needed, see the
+# docstrings for details.
+sync = Sync(trello=trello, toggl=toggl,
+    # Boards from this Trello organization
+    trello_org_id='TRELLO ORG TO SYNC BOARDS FROM',
+    # Tasks from this Toggl workspace
+    toggl_wid='TOGGL WORKSPACE ID TO SYNC TASKS TO')
+
+# Run forever (every 5 minutes), until interrupted by KeyboardInterrupt or
+# killed.
+sync.run(interval=5)
